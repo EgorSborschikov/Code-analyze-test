@@ -1,0 +1,17 @@
+root = true 
+ 
+ 
+[*.cs] 
+# Поднимать нарушения анализаторов как ошибки 
+dotnet_analyzer_diagnostic.severity = error 
+ 
+ 
+# Включим некоторые StyleCop правила как ошибки 
+dotnet_diagnostic.SA1300.severity = error # Element should begin with upper-case letter 
+dotnet_diagnostic.SA1600.severity = error # Elements must be documented 
+dotnet_diagnostic.SA1402.severity = error # File may only contain a single type 
+ 
+ 
+# правила форматирования 
+indent_style = space 
+indent_size = 4 

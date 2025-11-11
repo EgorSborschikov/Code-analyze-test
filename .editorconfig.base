@@ -1,0 +1,11 @@
+root = true 
+[*.cs] 
+# по умолчанию предупреждения 
+dotnet_analyzer_diagnostic.severity = suggestion 
+# выключим строгие StyleCop-правила для базового анализа 
+dotnet_diagnostic.SA1300.severity = none 
+dotnet_diagnostic.SA1600.severity = none 
+dotnet_diagnostic.SA1402.severity = none 
+# форматирование (нестрого) 
+indent_style = space 
+indent_size = 4 
