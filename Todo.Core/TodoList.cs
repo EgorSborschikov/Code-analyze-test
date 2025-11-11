@@ -89,6 +89,7 @@ namespace Todo.Core
                     }
                 }
             }
+        }
 
         public bool Remove(Guid id)
         {
