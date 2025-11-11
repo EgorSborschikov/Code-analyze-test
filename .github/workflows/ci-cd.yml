@@ -1,0 +1,56 @@
+name: CI / Build, Test, Pack & Release
+
+on:
+  push:
+    branches: [ master, Feat-add_new_management_features ]
+  pull_request:
+    branches: [ master, Feat-add_new_management_features ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build & Test (base)
+        run: |
+          cp .editorconfig.base .editorconfig
+          dotnet build --no-restore -c Release
+          dotnet test --no-build -c Release
+
+      - name: Build & Test (strict)
+        run: |
+          cp .editorconfig.strict .editorconfig
+          dotnet build --no-restore -c Release
+          dotnet test --no-build -c Release
+
+      - name: Pack
+        run: dotnet pack Todo.Core -c Release --output nupkgs
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/master'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          draft: false
+          prerelease: false

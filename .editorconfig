@@ -1,48 +1,11 @@
 root = true 
- 
 [*.cs] 
-dotnet_analyzer_diagnostic.severity = error 
- 
-# Имена — предупреждение 
-dotnet_diagnostic.SA1300.severity = warning # Element should begin with upper-case letter 
-dotnet_diagnostic.SA1310.severity = warning # Field names should not contain underscores 
- 
-# Документация — suggestion 
-dotnet_diagnostic.SA1600.severity = suggestion # Elements must be documented(XML-comments) 
- 
-# Несколько типов в файле — ошибка 
-dotnet_diagnostic.SA1402.severity = error # File may only contain a single type 
- 
-# Разрешаем var 
-dotnet_diagnostic.IDE0007.severity = none # Use implicit type 
-dotnet_diagnostic.IDE0008.severity = none # Use explicit type 
- 
-# Разрешаем expression-bodied методы 
-dotnet_diagnostic.IDE0022.severity = none # Use expression body for methods 
- 
-# Разрешаем new() 
-dotnet_diagnostic.IDE0090.severity = none # Simplify new() 
-dotnet_diagnostic.SA1000.severity = none # Spacing around keywords 
- 
-dotnet_diagnostic.SA1200.severity = none # Using must be inside namespace 
- 
-# Не требовать this. 
-dotnet_diagnostic.SA1101.severity = none # Prefix local calls with this 
-dotnet_diagnostic.IDE0003.severity = none # Remove 'this.' qualifier 
-dotnet_diagnostic.IDE0009.severity = warning # Add 'this.' qualifier 
- 
-dotnet_diagnostic.SA1516.severity = none # Elements should be separated by blank line 
- 
-dotnet_diagnostic.SA1201.severity = none # Elements should be ordered by access 
- 
-dotnet_diagnostic.IDE0005.severity = none # Remove unnecessary usings 
- 
-dotnet_diagnostic.IDE0028.severity = none # Collection initialization can be simplified 
- 
-dotnet_diagnostic.IDE0290.severity = warning # Primary constructor 
- 
-dotnet_diagnostic.SA1636.severity = suggestion # File header text should match settings 
- 
-# Стиль отступов (4 пробела на уровень) 
+# по умолчанию предупреждения 
+dotnet_analyzer_diagnostic.severity = suggestion 
+# выключим строгие StyleCop-правила для базового анализа 
+dotnet_diagnostic.SA1300.severity = none 
+dotnet_diagnostic.SA1600.severity = none 
+dotnet_diagnostic.SA1402.severity = none 
+# форматирование (нестрого) 
 indent_style = space 
-indent_size = 4
+indent_size = 4 
