@@ -1,4 +1,8 @@
-﻿namespace Todo.Core
+﻿// <copyright file="TodoItem.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Todo.Core
 {
     public class TodoItem
     {
@@ -8,6 +12,10 @@
 
         public bool IsDone { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TodoItem"/> class.
+        /// </summary>
+        /// <param name="title">Заголовок элемента.</param>
         public TodoItem(string title)
         {
             Title = title?.Trim() ?? throw new ArgumentNullException(nameof(title));
@@ -21,7 +29,7 @@
         {
             if (string.IsNullOrWhiteSpace(newTitle))
             {
-                throw new ArgumentNullException("Title is required", nameof(newTitle));
+                throw new ArgumentNullException(nameof(newTitle), "Title is required");
             }
 
             Title = newTitle.Trim();
