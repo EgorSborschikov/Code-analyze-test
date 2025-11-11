@@ -1,15 +1,18 @@
-﻿using Todo.Core;
+﻿using System;
+using System.Globalization;
+using Todo.Core;
 
 namespace SampleApp
 {
     public static class Program
     {
+        private static readonly char[] CommandSplitOptions = [' '];
+
         public static void Main()
         {
             var todoList = new TodoList();
-
             Console.WriteLine("Todo List Application");
-            Console.WriteLine("Commands: add, list, remove, find, exit");
+            Console.WriteLine("Commands: add, list, remove, remove-prefix, edit, find, save, load, exit");
 
             while (true)
             {
@@ -20,8 +23,8 @@ namespace SampleApp
                     continue;
                 }
 
-                var parts = input.Split(' ', 2);
-                var command = parts[0].ToLower(System.Globalization.CultureInfo.CurrentCulture);
+                var parts = input.Split(CommandSplitOptions, 3, StringSplitOptions.RemoveEmptyEntries);
+                var command = parts[0].ToLowerInvariant();
                 var arg1 = parts.Length > 1 ? parts[1] : null;
                 var arg2 = parts.Length > 2 ? parts[2] : null;
 
@@ -33,7 +36,7 @@ namespace SampleApp
                             Console.WriteLine("Error: Title is required.");
                             break;
                         }
-                        todoList.Add(arg1);
+                        _ = todoList.Add(arg1);
                         Console.WriteLine("Task added.");
                         break;
 
@@ -48,9 +51,13 @@ namespace SampleApp
                         if (Guid.TryParse(arg1, out var id))
                         {
                             if (todoList.Remove(id))
+                            {
                                 Console.WriteLine("Task removed.");
+                            }
                             else
+                            {
                                 Console.WriteLine("Task not found.");
+                            }
                         }
                         else
                         {
@@ -65,9 +72,14 @@ namespace SampleApp
                             break;
                         }
                         if (todoList.RemoveByIdPrefix(arg1))
+                        {
                             Console.WriteLine("Task(s) removed.");
+                        }
                         else
+                        {
                             Console.WriteLine("No tasks found with this prefix.");
+                        }
+
                         break;
 
                     case "edit":
@@ -79,9 +91,13 @@ namespace SampleApp
                         if (Guid.TryParse(arg1, out var editId))
                         {
                             if (todoList.Edit(editId, arg2))
+                            {
                                 Console.WriteLine("Task updated.");
+                            }
                             else
+                            {
                                 Console.WriteLine("Task not found.");
+                            }
                         }
                         else
                         {
@@ -108,7 +124,7 @@ namespace SampleApp
                             Console.WriteLine("Error: File path is required.");
                             break;
                         }
-                        var format = arg2?.ToLower();
+                        var format = arg2?.ToLowerInvariant();
                         todoList.SaveToFile(arg1, format == "json");
                         Console.WriteLine("Tasks saved.");
                         break;
@@ -119,7 +135,7 @@ namespace SampleApp
                             Console.WriteLine("Error: File path is required.");
                             break;
                         }
-                        var isJson = arg2?.ToLower() == "json";
+                        var isJson = arg2?.ToLowerInvariant() == "json";
                         todoList.LoadFromFile(arg1, isJson);
                         Console.WriteLine("Tasks loaded.");
                         break;

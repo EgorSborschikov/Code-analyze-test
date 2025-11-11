@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<OutputType>Library</OutputType>
     <Nullable>enable</Nullable>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
 	<ItemGroup>
