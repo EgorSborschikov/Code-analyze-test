@@ -25,6 +25,9 @@ jobs:
       - name: Restore
         run: dotnet restore
 
+      - name: Build
+        run: dotnet build Todo.Core/Todo.Core.csproj -c Release
+
       - name: Pack
         run: dotnet pack Todo.Core/Todo.Core.csproj -c Release -o ./artifacts
 
