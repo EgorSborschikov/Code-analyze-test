@@ -48,6 +48,9 @@ jobs:
       - name: Pack
         run: dotnet pack Todo.Core -c Release --output nupkgs
 
+      - name: List package files
+        run: ls -R nupkgs/
+
       - name: Publish to GitHub Packages
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/Feat-add_new_management_features'
-        run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://github.com/EgorSborschikov/index.json"
+        run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/EgorSborschikov/index.json"
