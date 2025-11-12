@@ -34,5 +34,14 @@ jobs:
       - name: List artifacts
         run: ls -la ./artifacts || true
 
-      - name: Push package to GitHub Packages (NuGet)
-        run: dotnet nuget push ./artifacts/*.nupkg --source "https://nuget.pkg.github.com/EgorSborschikov/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}"
+      - name: Setup NuGet source for GitHub Packages
+        run: |
+          dotnet nuget add source \
+            --username EgorSborschikov \
+            --password "${{ secrets.GITHUB_TOKEN }}" \
+            --store-password-in-clear-text \
+            --name github \
+            "https://nuget.pkg.github.com/EgorSborschikov/index.json"
+
+      - name: Push package to GitHub Packages
+        run: dotnet nuget push ./artifacts/*.nupkg --source "github" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
