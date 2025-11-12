@@ -44,4 +44,4 @@ jobs:
             "https://nuget.pkg.github.com/EgorSborschikov/index.json"
 
       - name: Push package to GitHub Packages
-        run: dotnet nuget push ./artifacts/*.nupkg --source "github" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
+        run: dotnet nuget push ./artifacts/*.nupkg --source "github" --api-key "${{ secrets.GH_PAT }}" --skip-duplicate
